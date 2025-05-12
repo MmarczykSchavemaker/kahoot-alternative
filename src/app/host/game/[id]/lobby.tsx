@@ -1,5 +1,7 @@
+import '../../../globals.css'
 import { Participant, supabase } from '@/types/types'
 import { useQRCode } from 'next-qrcode'
+
 
 export default function Lobby({
   participants: participants,

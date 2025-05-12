@@ -1,3 +1,5 @@
+import '../../../globals.css'
+
 import { TIME_TIL_CHOICE_REVEAL } from '@/constants'
 import { Answer, Participant, Question, supabase } from '@/types/types'
 import { useEffect, useRef, useState } from 'react'

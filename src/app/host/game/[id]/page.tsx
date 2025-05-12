@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react'
 import Lobby from './lobby'
 import Quiz from './quiz'
 import Results from './results'
+import '../../../globals.css'
 
 enum AdminScreens {
   lobby = 'lobby',

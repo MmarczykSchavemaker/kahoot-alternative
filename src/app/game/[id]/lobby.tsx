@@ -1,6 +1,7 @@
 import { Participant, supabase } from '@/types/types'
 import { on } from 'events'
 import { FormEvent, useEffect, useState } from 'react'
+import '../../globals.css'
 
 export default function Lobby({
   gameId,
@@ -90,17 +91,37 @@ function Register({
     setSending(true)
 
     if (!nickname) {
+      setSending(false)
       return
     }
+
+    // 1. Upewnij się, że masz user_id
+    let userId: string | null = null
+    const { data: sessionData } = await supabase.auth.getSession()
+    if (sessionData.session) {
+      userId = sessionData.session.user.id
+    } else {
+      const { data, error: anonErr } = await supabase.auth.signInAnonymously()
+      if (anonErr) {
+        setSending(false)
+        return alert(anonErr.message)
+      }
+      userId = data?.user?.id ?? null
+    }
+    if (!userId) {
+      setSending(false)
+      return alert('Could not get user ID')
+    }
+
+    // 2. Wrzuć record z user_id
     const { data: participant, error } = await supabase
       .from('participants')
-      .insert({ nickname, game_id: gameId })
+      .insert({ nickname, game_id: gameId, user_id: userId })
       .select()
       .single()
 
     if (error) {
       setSending(false)
-
       return alert(error.message)
     }
 

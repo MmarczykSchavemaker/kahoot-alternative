@@ -103,6 +103,7 @@ export default function Home({
   return (
     <main 
       className="
+       bg-navy
         w-full 
         min-h-screen 
         bg-contain bg-center bg-no-repeat

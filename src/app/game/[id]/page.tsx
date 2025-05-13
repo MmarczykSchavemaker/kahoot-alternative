@@ -102,6 +102,18 @@ export default function Home({
 
   return (
     <main className="bg-green-500 min-h-screen">
+      <div
+      className="
+        w-full 
+        min-h-screen 
+        bg-contain bg-center bg-no-repeat
+        md:bg-cover    /* na średnich ekranach tło będzie cover */
+        md:h-screen     /* na średnich i większych wymuś wysokość pełnego widoku */
+      "
+      style={{
+        backgroundImage: `url(https://ikbbaieshzipxzqstkvb.supabase.co/storage/v1/object/public/question-images/11.jpg)`,
+      }}
+    ></div>
       {currentScreen == Screens.lobby && (
         <Lobby
           onRegisterCompleted={onRegisterCompleted}

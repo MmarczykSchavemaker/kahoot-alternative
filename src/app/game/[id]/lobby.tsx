@@ -52,7 +52,7 @@ export default function Lobby({
   }, [gameId, onRegisterCompleted])
 
   return (
-    <div className="bg-green-500 flex justify-center items-center min-h-screen">
+    <main className="flex justify-center items-center min-h-screen bg-navy">
       <div className="bg-black p-12">
         {!participant && (
           <Register
@@ -75,7 +75,7 @@ export default function Lobby({
           </div>
         )}
       </div>
-    </div>
+    </main>
   )
 }
 

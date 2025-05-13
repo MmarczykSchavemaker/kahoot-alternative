@@ -23,8 +23,28 @@ export default function Lobby({
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <div className="flex justify-between m-auto bg-black p-12">
+    <main className="flex justify-center items-center min-h-screen bg-navy">
+      <div className="block m-auto bg-black p-12">
+          <button
+            className="mx-auto bg-white py-4 px-12 block text-black"
+            onClick={onClickStartGame}
+          >
+            Start Game
+          </button>
+          <br />
+        <h2 className="bg-white py-4 px-12 block text-black">
+            Dołącz do gry pod tym linkiem lub zeskanuj kod QR:
+            <br />
+            <a
+              className="text-blue-500"
+              href={`https://kahoot-alternative-mmarczykschavemakers-projects.vercel.app/game/${gameId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              https://kahoot-alternative-mmarczykschavemakers-projects.vercel.app/game/{gameId}
+            </a>
+          </h2>
+      <div className="flex justify-between m-auto p-12">
         <div className="w-96">
           <div className="flex justify-start flex-wrap pb-4">
             {participants.map((participant) => (
@@ -36,13 +56,7 @@ export default function Lobby({
               </div>
             ))}
           </div>
-
-          <button
-            className="mx-auto bg-white py-4 px-12 block text-black"
-            onClick={onClickStartGame}
-          >
-            Start Game
-          </button>
+         
         </div>
         <div className="pl-4">
           {/* <img src="/qr.png" alt="QR code" /> */}
@@ -57,6 +71,7 @@ export default function Lobby({
           />
         </div>
       </div>
-    </div>
+      </div>
+    </main>
   )
 }

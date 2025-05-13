@@ -39,7 +39,18 @@ export default function Results({
   }, [gameId])
 
   return (
-    <div className="min-h-screen bg-black">
+    <div
+      className="
+        w-full 
+        min-h-screen 
+        bg-contain bg-center bg-no-repeat
+        md:bg-cover    /* na średnich ekranach tło będzie cover */
+        md:h-screen     /* na średnich i większych wymuś wysokość pełnego widoku */
+      "
+      style={{
+        backgroundImage: `url(https://ikbbaieshzipxzqstkvb.supabase.co/storage/v1/object/public/question-images/11.jpg)`,
+      }}
+    >
       <div className="text-center">
         <h1 className="text-3xl my-4 py-4 px-12 bg-white inline-block rounded font-bold">
           {quizSet.name}

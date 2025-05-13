@@ -58,7 +58,13 @@ export default function Quiz({
           {question.body}
         </h2>
       </div>
-
+      {question.image_url && (
+                <img
+                  src={question.image_url}
+                  alt="Question Image"
+                  className="mx-auto my-4 w-[1080px] h-[500px] object-contain rounded"
+                />
+              )}
       {!isAnswerRevealed && chosenChoice && (
         <div className="flex-grow flex justify-center items-center">
           <div className="text-white text-2xl text-center p-4">

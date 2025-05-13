@@ -112,7 +112,15 @@ export default function Quiz({
         <h2 className="pb-4 text-3xl bg-white font-bold mx-24 my-12 p-4 rounded inline-block">
           {question.body}
         </h2>
-      </div>
+           </div>
+        {question.image_url && (
+          <img
+            src={question.image_url}
+            alt="Question Image"
+            className="mx-auto my-4 w-[1080px] h-[500px] object-contain rounded"
+          />
+        )}
+   
 
       <div className="flex-grow text-white px-8">
         {hasShownChoices && !isAnswerRevealed && (

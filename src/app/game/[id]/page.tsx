@@ -101,8 +101,7 @@ export default function Home({
   }, [gameId])
 
   return (
-    <main className="bg-green-500 min-h-screen">
-      <div
+    <main 
       className="
         w-full 
         min-h-screen 
@@ -113,7 +112,7 @@ export default function Home({
       style={{
         backgroundImage: `url(https://ikbbaieshzipxzqstkvb.supabase.co/storage/v1/object/public/question-images/11.jpg)`,
       }}
-    ></div>
+    >
       {currentScreen == Screens.lobby && (
         <Lobby
           onRegisterCompleted={onRegisterCompleted}

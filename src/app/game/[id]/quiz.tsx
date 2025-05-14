@@ -156,48 +156,58 @@ export default function Quiz({
           )}
           {isAnswerRevealed && (
             <div className="flex-grow flex justify-center items-center flex-col">
-            <div className="bg-navy w-1/12 px-4 py-6 text-xl rounded-xl text-white flex justify-center items-center flex-col">
-              <h2 className="text-white text-2xl text-center pb-2">
-                {chosenChoice?.is_correct ? 'Correct' : 'Incorrect'}
-              </h2>
               <div
-                className={`text-white rounded-full p-4  ${
-                  chosenChoice?.is_correct ? 'bg-green-500' : 'bg-red-500'
-                }`}
+                className="
+                  bg-navy
+                  w-auto max-w-sm sm:max-w-md lg:max-w-lg   /* ograniczona szerokość, responsywna */
+                  px-4 py-6 sm:px-6 sm:py-8                 /* padding rośnie na większych ekranach */
+                  text-base sm:text-lg md:text-xl           /* responsywna wielkość czcionki */
+                  rounded-xl text-white
+                  flex flex-col items-center justify-center
+                  mx-auto                                    /* centrowanie poziome */
+                "
               >
-                {chosenChoice?.is_correct ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="m4.5 12.75 6 6 9-13.5"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 18 18 6M6 6l12 12"
-                    />
-                  </svg>
-                )}
+                <h2 className="text-white text-2xl text-center pb-2">
+                  {chosenChoice?.is_correct ? 'Correct' : 'Incorrect'}
+                </h2>
+                <div
+                  className={`text-white rounded-full p-4  ${
+                    chosenChoice?.is_correct ? 'bg-green-500' : 'bg-red-500'
+                  }`}
+                >
+                  {chosenChoice?.is_correct ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="m4.5 12.75 6 6 9-13.5"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18 18 6M6 6l12 12"
+                      />
+                    </svg>
+                  )}
+                </div>
               </div>
-            </div>
             </div>
           )}
         </div>

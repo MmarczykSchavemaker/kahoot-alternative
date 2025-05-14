@@ -111,7 +111,7 @@ export default function Home({
         md:h-screen     /* na średnich i większych wymuś wysokość pełnego widoku */
       "
       style={{
-        backgroundImage: `url(https://ikbbaieshzipxzqstkvb.supabase.co/storage/v1/object/public/question-images/11.jpg)`,
+        backgroundImage: `url(https://ikbbaieshzipxzqstkvb.supabase.co/storage/v1/object/public/question-images//11_full_removed_upscaled.png)`,
       }}
     >
       {currentScreen == Screens.lobby && (

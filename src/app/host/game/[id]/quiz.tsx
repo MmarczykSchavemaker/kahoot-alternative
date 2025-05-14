@@ -97,110 +97,110 @@ export default function Quiz({
 
   return (
     <div className="h-screen flex flex-col items-stretch bg-slate-900 relative">
-      <div className="absolute right-4 top-4">
-        {isAnswerRevealed && (
+      {/* Next-button: tylko gdy odpowiedź odkryta */}
+      {isAnswerRevealed && (
+        <div className="absolute top-4 right-4 z-20">
           <button
-            className="p-2 bg-white text-black rounded hover:bg-gray-200"
+            className="p-2 text-xl text-white bg-navy rounded hover:bg-slate-900"
             onClick={getNextQuestion}
           >
             Next
           </button>
-        )}
-      </div>
+        </div>
+      )}
 
-      <div className="text-center">
-        <h2 className="pb-4 text-3xl bg-white font-bold mx-24 my-12 p-4 rounded inline-block">
-          {question.body}
-        </h2>
-           </div>
-        {question.image_url && (
-          <img
-            src={question.image_url}
-            alt="Question Image"
-            className="mx-auto my-4 w-[1080px] h-[500px] object-contain rounded"
-          />
-        )}
-   
-
-      <div className="flex-grow text-white px-8">
-        {hasShownChoices && !isAnswerRevealed && (
-          <div className="flex justify-between items-center">
-            <div className="text-5xl">
-              <CountdownCircleTimer
-                onComplete={() => {
-                  onTimeUp()
-                }}
-                isPlaying
-                duration={20}
-                colors={['#004777', '#F7B801', '#A30000', '#A30000']}
-                colorsTime={[7, 5, 2, 0]}
-              >
-                {({ remainingTime }) => remainingTime}
-              </CountdownCircleTimer>
-            </div>
-            <div className="text-center">
-              <div className="text-6xl pb-4">{answers.length}</div>
-              <div className="text-3xl">Answers</div>
-            </div>
+      <div className="relative flex-grow">
+        {/* background layer */}
+        <div
+          className="absolute inset-0 bg-center bg-cover filter blur-sm brightness-80"
+          style={{ backgroundImage: `url(${question.image_url})` }}
+        />
+        {/* content layer */}
+        <div className="relative z-10 flex flex-col h-full">
+          <div className="text-center">
+            <h2 className="pb-4 text-white text-3xl bg-navy font-bold mx-24 my-12 p-4 rounded inline-block">
+              {question.body}
+            </h2>
           </div>
-        )}
-        {isAnswerRevealed && (
-          <div className="flex justify-center">
-            {question.choices.map((choice, index) => (
-              <div
-                key={choice.id}
-                className="mx-2 h-48 w-24 flex flex-col items-stretch justify-end"
-              >
-                <div className="flex-grow relative">
-                  <div
-                    style={{
-                      height: `${
-                        (answers.filter(
-                          (answer) => answer.choice_id === choice.id
-                        ).length *
-                          100) /
-                        (answers.length || 1)
-                      }%`,
+          <div className="flex-grow text-white px-8">
+            {hasShownChoices && !isAnswerRevealed && (
+              <div className="flex justify-between items-center">
+                <div className="text-5xl">
+                  <CountdownCircleTimer
+                    onComplete={() => {
+                      onTimeUp()
                     }}
-                    className={`absolute bottom-0 left-0 right-0 mb-1 rounded-t ${
-                      index === 0
-                        ? 'bg-red-500'
-                        : index === 1
-                        ? 'bg-blue-500'
-                        : index === 2
-                        ? 'bg-yellow-500'
-                        : 'bg-green-500'
-                    }`}
-                  ></div>
+                    isPlaying
+                    duration={20}
+                    colors={['#004777', '#F7B801', '#A30000', '#A30000']}
+                    colorsTime={[7, 5, 2, 0]}
+                  >
+                    {({ remainingTime }) => remainingTime}
+                  </CountdownCircleTimer>
                 </div>
-                <div
-                  className={`mt-1 text-white text-lg text-center py-2 rounded-b ${
-                    index === 0
-                      ? 'bg-red-500'
-                      : index === 1
-                      ? 'bg-blue-500'
-                      : index === 2
-                      ? 'bg-yellow-500'
-                      : 'bg-green-500'
-                  }`}
-                >
-                  {
-                    answers.filter((answer) => answer.choice_id === choice.id)
-                      .length
-                  }
+                <div className="text-center">
+                  <div className="text-6xl pb-4">{answers.length}</div>
+                  <div className="text-3xl">Answers</div>
                 </div>
               </div>
-            ))}
+            )}
+            {isAnswerRevealed && (
+              <div className="flex justify-center">
+                {question.choices.map((choice, index) => (
+                  <div
+                    key={choice.id}
+                    className="mx-2 h-48 w-24 flex flex-col items-stretch justify-end"
+                  >
+                    <div className="flex-grow relative">
+                      <div
+                        style={{
+                          height: `${
+                            (answers.filter(
+                              (answer) => answer.choice_id === choice.id
+                            ).length *
+                              100) /
+                            (answers.length || 1)
+                          }%`,
+                        }}
+                        className={`absolute bottom-0 left-0 right-0 mb-1 rounded-t ${
+                          index === 0
+                            ? 'bg-red-500'
+                            : index === 1
+                            ? 'bg-blue-500'
+                            : index === 2
+                            ? 'bg-yellow-500'
+                            : 'bg-green-500'
+                        }`}
+                      ></div>
+                    </div>
+                    <div
+                      className={`mt-1 text-white text-lg text-center py-2 rounded-b ${
+                        index === 0
+                          ? 'bg-red-500'
+                          : index === 1
+                          ? 'bg-blue-500'
+                          : index === 2
+                          ? 'bg-yellow-500'
+                          : 'bg-green-500'
+                      }`}
+                    >
+                      {
+                        answers.filter((answer) => answer.choice_id === choice.id)
+                          .length
+                      }
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-        )}
-      </div>
 
-      {hasShownChoices && (
-        <div className="flex justify-between flex-wrap p-4">
-          {question.choices.map((choice, index) => (
-            <div key={choice.id} className="w-1/2 p-1">
-              <div
-                className={`px-4 py-6 w-full text-2xl rounded font-bold text-white flex justify-between
+          {hasShownChoices && (
+            <div className="flex justify-between flex-wrap p-4">
+              {question.choices.map((choice, index) => (
+                <div key={choice.id} className="w-1/2 p-1">
+                  <div
+                    className={`px-4 py-6 w-full text-2xl rounded font-bold text-white flex justify-between
                 ${
                   index === 0
                     ? 'bg-red-500'
@@ -212,49 +212,51 @@ export default function Quiz({
                 }
                 ${isAnswerRevealed && !choice.is_correct ? 'opacity-60' : ''}
                `}
-              >
-                <div>{choice.body}</div>
-                {isAnswerRevealed && (
-                  <div>
-                    {choice.is_correct && (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={5}
-                        stroke="currentColor"
-                        className="w-6 h-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="m4.5 12.75 6 6 9-13.5"
-                        />
-                      </svg>
-                    )}
-                    {!choice.is_correct && (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={5}
-                        stroke="currentColor"
-                        className="w-6 h-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M6 18 18 6M6 6l12 12"
-                        />
-                      </svg>
+                  >
+                    <div>{choice.body}</div>
+                    {isAnswerRevealed && (
+                      <div>
+                        {choice.is_correct && (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={5}
+                            stroke="currentColor"
+                            className="w-6 h-6"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="m4.5 12.75 6 6 9-13.5"
+                            />
+                          </svg>
+                        )}
+                        {!choice.is_correct && (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={5}
+                            stroke="currentColor"
+                            className="w-6 h-6"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M6 18 18 6M6 6l12 12"
+                            />
+                          </svg>
+                        )}
+                      </div>
                     )}
                   </div>
-                )}
-              </div>
+                </div>
+              ))}
             </div>
-          ))}
+          )}
         </div>
-      )}
+      </div>
 
       <div className="flex text-white py-2 px-4 items-center bg-black">
         <div className="text-2xl">

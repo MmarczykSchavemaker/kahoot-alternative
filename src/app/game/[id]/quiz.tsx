@@ -54,155 +54,154 @@ export default function Quiz({
   return (
     <div className="h-screen flex flex-col items-stretch bg-slate-900 relative">
       <div className="text-center">
-        <h2 className="pb-4 text-2xl bg-white font-bold mx-4 my-12 p-4 rounded inline-block md:text-3xl md:px-24">
+          <h2 className="pb-4 text-white text-3xl bg-navy font-bold mx-24 my-12 p-4 rounded inline-block">
           {question.body}
         </h2>
       </div>
-      {question.image_url && (
-                <img
-                  src={question.image_url}
-                  alt="Question Image"
-                  className="mx-auto my-4 w-[1080px] h-[500px] object-contain rounded"
-                />
-              )}
-      {!isAnswerRevealed && chosenChoice && (
-        <div className="flex-grow flex justify-center items-center">
-          <div className="text-white text-2xl text-center p-4">
-            Wait for others to answer...
-          </div>
-        </div>
-      )}
-
-      {!hasShownChoices && !isAnswerRevealed && (
-        <div className="flex-grow text-transparent flex justify-center">
-          <CountdownCircleTimer
-            onComplete={() => {
-              setHasShownChoices(true)
-              setQuestionStartTime(Date.now())
-            }}
-            isPlaying
-            duration={TIME_TIL_CHOICE_REVEAL / 1000}
-            colors={['#fff', '#fff', '#fff', '#fff']}
-            trailColor={'transparent' as ColorFormat}
-            colorsTime={[7, 5, 2, 0]}
-          >
-            {({ remainingTime }) => remainingTime}
-          </CountdownCircleTimer>
-        </div>
-      )}
-
-      {hasShownChoices && !isAnswerRevealed && !chosenChoice && (
-        <div className="flex-grow flex flex-col items-stretch">
-          <div className="flex-grow"></div>
-          <div className="flex justify-between flex-wrap p-4">
-            {question.choices.map((choice, index) => (
-              <div key={choice.id} className="w-1/2 p-1">
-                <button
-                  onClick={() => answer(choice)}
-                  disabled={chosenChoice !== null || isAnswerRevealed}
-                  className={`px-4 py-6 w-full text-xl rounded text-white flex justify-between md:text-2xl md:font-bold
-              ${
-                index === 0
-                  ? 'bg-red-500'
-                  : index === 1
-                  ? 'bg-blue-500'
-                  : index === 2
-                  ? 'bg-yellow-500'
-                  : 'bg-green-500'
-              }
-              ${isAnswerRevealed && !choice.is_correct ? 'opacity-60' : ''}
-             `}
-                >
-                  <div>{choice.body}</div>
-                  {isAnswerRevealed && (
-                    <div>
-                      {choice.is_correct && (
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={5}
-                          stroke="currentColor"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="m4.5 12.75 6 6 9-13.5"
-                          />
-                        </svg>
-                      )}
-                      {!choice.is_correct && (
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={5}
-                          stroke="currentColor"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M6 18 18 6M6 6l12 12"
-                          />
-                        </svg>
-                      )}
-                    </div>
-                  )}
-                </button>
+      <div className="relative flex-grow">
+        {/* background layer */}
+        <div
+          className="absolute inset-0 bg-center bg-cover filter blur-sm brightness-80"
+          style={{ backgroundImage: `url(${question.image_url})` }}
+        />
+        {/* content layer */}
+        <div className="relative z-10 flex flex-col h-full">
+          {!isAnswerRevealed && chosenChoice && (
+            <div className="flex-grow flex justify-center items-center">
+              <div className="bg-navy text-white text-2xl text-center p-4 rounded">
+                Wait for others to answer...
               </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {isAnswerRevealed && (
-        <div className="flex-grow flex justify-center items-center flex-col">
-          <h2 className="text-white text-2xl text-center pb-2">
-            {chosenChoice?.is_correct ? 'Correct' : 'Incorrect'}
-          </h2>
-          <div
-            className={`text-white rounded-full p-4  ${
-              chosenChoice?.is_correct ? 'bg-green-500' : 'bg-red-500'
-            }`}
-          >
-            {chosenChoice?.is_correct && (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={5}
-                stroke="currentColor"
-                className="w-6 h-6"
+            </div>
+          )}
+          {!hasShownChoices && !isAnswerRevealed && (
+            <div className="flex-grow text-transparent flex justify-center">
+              <CountdownCircleTimer
+                onComplete={() => {
+                  setHasShownChoices(true)
+                  setQuestionStartTime(Date.now())
+                }}
+                isPlaying
+                duration={TIME_TIL_CHOICE_REVEAL / 1000}
+                colors={['#fff', '#fff', '#fff', '#fff']}
+                trailColor={'transparent' as ColorFormat}
+                colorsTime={[7, 5, 2, 0]}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="m4.5 12.75 6 6 9-13.5"
-                />
-              </svg>
-            )}
-            {!chosenChoice?.is_correct && (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={5}
-                stroke="currentColor"
-                className="w-6 h-6"
+                {({ remainingTime }) => remainingTime}
+              </CountdownCircleTimer>
+            </div>
+          )}
+          {hasShownChoices && !isAnswerRevealed && !chosenChoice && (
+            <div className="flex-grow flex flex-col items-stretch">
+              <div className="flex-grow"></div>
+              <div className="flex justify-between flex-wrap p-4">
+                {question.choices.map((choice, index) => (
+                  <div key={choice.id} className="w-1/2 p-1">
+                    <button
+                      onClick={() => answer(choice)}
+                      disabled={chosenChoice !== null || isAnswerRevealed}
+                      className={`px-4 py-6 w-full text-xl rounded text-white flex justify-between md:text-2xl md:font-bold
+                    ${
+                      index === 0
+                        ? 'bg-red-500'
+                        : index === 1
+                        ? 'bg-blue-500'
+                        : index === 2
+                        ? 'bg-yellow-500'
+                        : 'bg-green-500'
+                    }
+                    ${isAnswerRevealed && !choice.is_correct ? 'opacity-60' : ''}
+                    `}
+                    >
+                      <div>{choice.body}</div>
+                      {isAnswerRevealed && (
+                        <div>
+                          {choice.is_correct ? (
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={5}
+                              stroke="currentColor"
+                              className="w-6 h-6"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="m4.5 12.75 6 6 9-13.5"
+                              />
+                            </svg>
+                          ) : (
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={5}
+                              stroke="currentColor"
+                              className="w-6 h-6"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M6 18 18 6M6 6l12 12"
+                              />
+                            </svg>
+                          )}
+                        </div>
+                      )}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          {isAnswerRevealed && (
+            <div className="flex-grow flex justify-center items-center flex-col">
+            <div className="bg-navy w-1/12 px-4 py-6 text-xl rounded-xl text-white flex justify-center items-center flex-col">
+              <h2 className="text-white text-2xl text-center pb-2">
+                {chosenChoice?.is_correct ? 'Correct' : 'Incorrect'}
+              </h2>
+              <div
+                className={`text-white rounded-full p-4  ${
+                  chosenChoice?.is_correct ? 'bg-green-500' : 'bg-red-500'
+                }`}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18 18 6M6 6l12 12"
-                />
-              </svg>
-            )}
-          </div>
+                {chosenChoice?.is_correct ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m4.5 12.75 6 6 9-13.5"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18 18 6M6 6l12 12"
+                    />
+                  </svg>
+                )}
+              </div>
+            </div>
+            </div>
+          )}
         </div>
-      )}
-
+      </div>
       <div className="flex text-white py-2 px-4 items-center bg-black">
         <div className="text-2xl">
           {question.order + 1}/{questionCount}

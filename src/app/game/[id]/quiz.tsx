@@ -54,7 +54,17 @@ export default function Quiz({
   return (
     <div className="h-screen flex flex-col items-stretch bg-slate-900 relative">
       <div className="text-center">
-          <h2 className="pb-4 text-white text-3xl bg-navy font-bold mx-24 my-12 p-4 rounded inline-block">
+        <h2
+          className="
+            pb-4 bg-navy font-bold text-white
+            text-xl sm:text-2xl md:text-3xl     /* responsywna wielkość czcionku */
+            mx-4 sm:mx-8 md:mx-24 lg:mx-32 xl:mx-48  /* większe marginesy na dużych ekranach */
+            my-6 sm:my-8 md:my-12                  /* responsywne marginesy pionowe */
+            p-4 rounded inline-block
+            max-w-full sm:max-w-lg md:max-w-2xl lg:max-w-3xl xl:max-w-4xl  /* większa szerokość na dużych ekranach */
+            break-words                            /* łamanie długich tekstów */
+          "
+        >
           {question.body}
         </h2>
       </div>

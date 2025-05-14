@@ -101,7 +101,7 @@ export default function Quiz({
       {isAnswerRevealed && (
         <div className="absolute top-4 right-4 z-20">
           <button
-            className="p-2 text-xl text-white bg-navy rounded hover:bg-slate-900"
+            className="p-2 text-xl text-white bg-slate-900 rounded hover:bg-slate-800 transition duration-300"
             onClick={getNextQuestion}
           >
             Next
@@ -118,29 +118,53 @@ export default function Quiz({
         {/* content layer */}
         <div className="relative z-10 flex flex-col h-full">
           <div className="text-center">
-            <h2 className="pb-4 text-white text-3xl bg-navy font-bold mx-24 my-12 p-4 rounded inline-block">
+            <h2
+              className="
+                pb-4 bg-navy font-bold text-white
+                text-xl sm:text-2xl md:text-3xl     /* responsywna wielkość czcionku */
+                mx-4 sm:mx-8 md:mx-24 lg:mx-32 xl:mx-48  /* większe marginesy na dużych ekranach */
+                my-6 sm:my-8 md:my-12                  /* responsywne marginesy pionowe */
+                p-4 rounded inline-block
+                max-w-full sm:max-w-lg md:max-w-2xl lg:max-w-3xl xl:max-w-full  /* większa szerokość na dużych ekranach */
+                break-words                            /* łamanie długich tekstów */
+              "
+              style={{
+                textShadow: '5px 5px 3px rgba(0, 0, 0, 0.7)',
+                fontWeight: '700',
+                fontSize: '2.2em',
+              }}
+            >
               {question.body}
             </h2>
           </div>
           <div className="flex-grow text-white px-8">
             {hasShownChoices && !isAnswerRevealed && (
-              <div className="flex justify-between items-center">
-                <div className="text-5xl">
-                  <CountdownCircleTimer
-                    onComplete={() => {
-                      onTimeUp()
-                    }}
-                    isPlaying
-                    duration={20}
-                    colors={['#004777', '#F7B801', '#A30000', '#A30000']}
-                    colorsTime={[7, 5, 2, 0]}
-                  >
-                    {({ remainingTime }) => remainingTime}
-                  </CountdownCircleTimer>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mx-4 sm:mx-8 lg:mx-24">
+                {/* timer block */}
+                <div className="flex justify-center">
+                  <div className="text-5xl sm:text-6xl font-extrabold bg-navy p-3 sm:p-4 rounded-xl shadow-lg">
+                    <CountdownCircleTimer
+                      onComplete={() => {
+                        onTimeUp()
+                      }}
+                      isPlaying
+                      duration={20}
+                      colors={['#1FC1FC', '#F7B801', '#A30000', '#A30000']}
+                      colorsTime={[7, 5, 2, 0]}
+                    >
+                      {({ remainingTime }) => remainingTime}
+                    </CountdownCircleTimer>
+                  </div>
                 </div>
-                <div className="text-center">
-                  <div className="text-6xl pb-4">{answers.length}</div>
-                  <div className="text-3xl">Answers</div>
+
+                {/* answers counter block */}
+                <div className="flex justify-center">
+                  <div className="bg-navy p-3 sm:p-4 rounded-xl shadow-lg text-white text-center">
+                    <div className="text-5xl sm:text-6xl font-extrabold p-10">
+                      {answers.length}
+                    </div>
+                    <div className="text-lg sm:text-2xl">Answers</div>
+                  </div>
                 </div>
               </div>
             )}
@@ -210,7 +234,7 @@ export default function Quiz({
                     ? 'bg-yellow-500'
                     : 'bg-green-500'
                 }
-                ${isAnswerRevealed && !choice.is_correct ? 'opacity-60' : ''}
+                ${isAnswerRevealed && !choice.is_correct ? 'opacity-50' : ''}
                `}
                   >
                     <div>{choice.body}</div>

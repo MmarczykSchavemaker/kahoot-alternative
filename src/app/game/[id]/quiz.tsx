@@ -74,11 +74,13 @@ export default function Quiz({
       </div>
 
       {question.image_url && (
-        <img
-          src={question.image_url}
-          alt="Question Image"
-          className="w-[1080px] h-[500px] object-contain rounded mx-auto my-4"
-       />
+        <div className="flex justify-center mx-auto my-4 px-4">
+          <img
+            src={question.image_url}
+            alt="Question Image"
+            className="max-h-[30vh] md:max-h-[40vh] lg:max-h-[50vh] w-auto max-w-full object-contain rounded shadow-lg"
+          />
+        </div>
       )}
 
       {!isAnswerRevealed && chosenChoice && (
@@ -126,7 +128,7 @@ export default function Quiz({
                   ? 'bg-yellow-500'
                   : 'bg-green-500'
               }
-              ${isAnswerRevealed && !choice.is_correct ? 'opacity-60' : ''}
+              ${isAnswerRevealed && !choice.is_correct ? 'opacity-50' : ''}
              `}
                 >
                   <div>{choice.body}</div>

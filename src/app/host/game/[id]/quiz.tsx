@@ -232,7 +232,7 @@ export default function Quiz({
 
         {/* Answer choices section - always at bottom with fixed size */}
         {hasShownChoices && (
-          <div className="flex justify-between flex-wrap p-4 mt-auto">
+          <div className="flex justify-between flex-wrap p-4 mb-2 mt-auto">
             {question.choices.map((choice, index) => (
               <div key={choice.id} className="w-1/2 p-1">
                 <div
@@ -294,7 +294,7 @@ export default function Quiz({
       </div>
 
       {/* Bottom progress bar - always at bottom */}
-      <div className="flex text-white py-2 px-4 items-center bg-black flex-shrink-0">
+      <div className="flex text-white py-4 px-4 items-center bg-black flex-shrink-0">
         <div className="text-2xl">
           {question.order + 1}/{questionCount}
         </div>

@@ -85,7 +85,12 @@ export default function Quiz({
 
       {!isAnswerRevealed && chosenChoice && (
         <div className="flex justify-center items-center pb-0 pt-0">
-          <div className="text-white text-2xl text-center p-2">
+          <div className="text-white text-2xl text-center p-2"
+            style={{
+              textShadow: '5px 5px 3px rgba(0, 0, 0, 0.7)',
+              fontWeight: '700',
+            }}
+          >
             Wait for others to answer...
           </div>
         </div>

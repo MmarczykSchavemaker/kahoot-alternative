@@ -52,27 +52,34 @@ export default function Quiz({
   }
 
   return (
-    <div className="h-screen flex flex-col items-stretch bg-slate-900 relative">
+    <div className="h-screen flex flex-col items-stretch bg-navy relative">
       <div className="text-center">
         <h2
           className="
-            pb-4 bg-navy font-bold text-white
+            pb-4 bg-blue-950 font-bold text-white
             text-xl sm:text-2xl md:text-3xl     /* responsywna wielkość czcionku */
             mx-4 sm:mx-8 md:mx-24 lg:mx-32 xl:mx-48  /* większe marginesy na dużych ekranach */
-            my-6 sm:my-8 md:my-12                  /* responsywne marginesy pionowe */
+            my-4 sm:my-6 md:my-8                  /* responsywne marginesy pionowe */
             p-4 rounded inline-block
-            max-w-full sm:max-w-lg md:max-w-2xl lg:max-w-3xl xl:max-w-4xl  /* większa szerokość na dużych ekranach */
+            max-w-full sm:max-w-lg md:max-w-2xl lg:max-w-3xl xl:max-w-full  /* większa szerokość na dużych ekranach */
             break-words                            /* łamanie długich tekstów */
           "
           style={{
                 textShadow: '5px 5px 3px rgba(0, 0, 0, 0.7)',
                 fontWeight: '700',
-                fontSize: '2.2em',
               }}
         >
           {question.body}
         </h2>
       </div>
+
+      {question.image_url && (
+        <img
+          src={question.image_url}
+          alt="Question Image"
+          className="w-[1080px] h-[500px] object-contain rounded mx-auto my-4"
+       />
+      )}
 
       {!isAnswerRevealed && chosenChoice && (
         <div className="flex-grow flex justify-center items-center">
@@ -167,7 +174,7 @@ export default function Quiz({
       )}
 
       {isAnswerRevealed && (
-        <div className="flex-grow flex justify-center items-center flex-col">
+        <div className="flex-grow flex justify-center items-center flex-col pb-4">
           <h2 className="text-white text-2xl text-center pb-2">
             {chosenChoice?.is_correct ? 'Correct' : 'Incorrect'}
           </h2>

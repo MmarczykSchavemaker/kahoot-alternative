@@ -96,25 +96,64 @@ export default function Quiz({
   }, [question.id])
 
   return (
-    <div className="h-screen flex flex-col items-stretch bg-slate-900 relative">
+    <div className="h-screen flex flex-col items-stretch bg-navy relative">
       {/* Next-button: tylko gdy odpowiedź odkryta */}
       {isAnswerRevealed && (
         <div className="absolute top-4 right-4 z-20">
           <button
-            className="p-2 text-xl text-white bg-slate-900 rounded hover:bg-slate-800 transition duration-300"
+            className="p-2 text-xl text-white bg-slate-900 rounded hover:bg-[#1C2D73] transition duration-300"
+                style={{
+                textShadow: '5px 5px 3px rgba(0, 0, 0, 0.7)',
+                fontWeight: '700',
+                fontSize: '1.2em',
+              }}
             onClick={getNextQuestion}
           >
             Next
           </button>
-        )}
-      </div>
+        </div>
+      )}
 
       <div className="text-center">
-        <h2 className="pb-4 text-3xl bg-white font-bold mx-24 my-12 p-4 rounded inline-block">
+        <h2
+          className="
+            pb-4 bg-blue-950 font-bold text-white
+            text-xl sm:text-2xl md:text-3xl     /* responsywna wielkość czcionku */
+            mx-4 sm:mx-8 md:mx-24 lg:mx-32 xl:mx-48  /* większe marginesy na dużych ekranach */
+            my-4 sm:my-6 md:my-8                  /* responsywne marginesy pionowe */
+            p-4 rounded inline-block
+            max-w-full sm:max-w-lg md:max-w-2xl lg:max-w-3xl xl:max-w-full  /* większa szerokość na dużych ekranach */
+            break-words                            /* łamanie długich tekstów */
+          "
+          style={{
+                textShadow: '5px 5px 3px rgba(0, 0, 0, 0.7)',
+                fontWeight: '700',
+                fontSize: '2.2em',
+              }}
+        >
           {question.body}
         </h2>
       </div>
 
+      {question.image_url && (
+        <div className="relative w-full mx-auto my-4 max-w-screen-md sm:max-w-screen-lg lg:max-w-screen-xl xl:max-w-screen-full ">
+    {/* zachowaj proporcje przez aspect-video (16:9) */}
+   <div className="relative w-full aspect-video overflow-hidden rounded">
+          <img
+            src={question.image_url}
+            alt="Question Image"
+            className="
+              w-full             /* rozciąga w poziomie na 100% kontenera */
+              h-auto             /* zachowuje proporcje */
+              object-fill       /* wypelnia całą przestrzeń rodzica */
+              rounded
+            "
+          />
+        </div>
+        </div>
+      )}
+    
+   
       <div className="flex-grow text-white px-8">
         {hasShownChoices && !isAnswerRevealed && (
           <div className="flex justify-between items-center">
@@ -248,9 +287,6 @@ export default function Quiz({
               ))}
             </div>
           )}
-        </div>
-      </div>
-
       <div className="flex text-white py-2 px-4 items-center bg-black">
         <div className="text-2xl">
           {question.order + 1}/{questionCount}

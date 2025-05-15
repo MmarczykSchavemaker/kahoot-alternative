@@ -74,25 +74,25 @@ export default function Quiz({
       </div>
 
       {question.image_url && (
-        <div className="flex justify-center mx-auto my-4 px-4">
+        <div className="flex justify-center mx-auto my-2 px-4">
           <img
             src={question.image_url}
             alt="Question Image"
-            className="max-h-[30vh] md:max-h-[40vh] lg:max-h-[50vh] w-auto max-w-full object-contain rounded shadow-lg"
+            className="max-h-[40vh] md:max-h-[40vh] lg:max-h-[50vh] w-auto max-w-full object-contain rounded shadow-lg"
           />
         </div>
       )}
 
       {!isAnswerRevealed && chosenChoice && (
-        <div className="flex-grow flex justify-center items-center">
-          <div className="text-white text-2xl text-center p-4">
+        <div className="flex justify-center items-center pb-0 pt-0">
+          <div className="text-white text-2xl text-center p-2">
             Wait for others to answer...
           </div>
         </div>
       )}
 
       {!hasShownChoices && !isAnswerRevealed && (
-        <div className="flex-grow text-transparent flex justify-center">
+        <div className="text-transparent flex justify-center py-2">
           <CountdownCircleTimer
             onComplete={() => {
               setHasShownChoices(true)
@@ -110,7 +110,7 @@ export default function Quiz({
       )}
 
       {hasShownChoices && !isAnswerRevealed && !chosenChoice && (
-        <div className="flex-grow flex flex-col items-stretch">
+        <div className="flex-1 flex flex-col items-stretch">
           <div className="flex-grow"></div>
           <div className="flex justify-between flex-wrap p-4">
             {question.choices.map((choice, index) => (
@@ -176,12 +176,12 @@ export default function Quiz({
       )}
 
       {isAnswerRevealed && (
-        <div className="flex-grow flex justify-center items-center flex-col pb-4">
-          <h2 className="text-white text-2xl text-center pb-2">
+        <div className="flex justify-center items-center flex-col py-4">
+          <h2 className="text-white text-3xl font-bold text-center pb-1">
             {chosenChoice?.is_correct ? 'Correct' : 'Incorrect'}
           </h2>
           <div
-            className={`text-white rounded-full p-4  ${
+            className={`text-white rounded-full p-3 ${
               chosenChoice?.is_correct ? 'bg-green-500' : 'bg-red-500'
             }`}
           >
@@ -192,7 +192,7 @@ export default function Quiz({
                 viewBox="0 0 24 24"
                 strokeWidth={5}
                 stroke="currentColor"
-                className="w-6 h-6"
+                className="w-8 h-8 md:w-10 md:h-10"
               >
                 <path
                   strokeLinecap="round"
@@ -208,7 +208,7 @@ export default function Quiz({
                 viewBox="0 0 24 24"
                 strokeWidth={5}
                 stroke="currentColor"
-                className="w-6 h-6"
+                className="w-8 h-8 md:w-10 md:h-10"
               >
                 <path
                   strokeLinecap="round"
@@ -221,7 +221,7 @@ export default function Quiz({
         </div>
       )}
 
-      <div className="flex text-white py-2 px-4 items-center bg-black">
+      <div className="flex text-white py-2 px-4 items-center bg-black mt-auto">
         <div className="text-2xl">
           {question.order + 1}/{questionCount}
         </div>

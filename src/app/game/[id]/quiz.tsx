@@ -64,6 +64,11 @@ export default function Quiz({
             max-w-full sm:max-w-lg md:max-w-2xl lg:max-w-3xl xl:max-w-4xl  /* większa szerokość na dużych ekranach */
             break-words                            /* łamanie długich tekstów */
           "
+          style={{
+                textShadow: '5px 5px 3px rgba(0, 0, 0, 0.7)',
+                fontWeight: '700',
+                fontSize: '2.2em',
+              }}
         >
           {question.body}
         </h2>

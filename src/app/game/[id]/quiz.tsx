@@ -59,7 +59,7 @@ export default function Quiz({
             pb-4 bg-blue-950 font-bold text-white
             text-xl sm:text-2xl md:text-3xl     /* responsywna wielkość czcionku */
             mx-4 sm:mx-8 md:mx-24 lg:mx-32 xl:mx-48  /* większe marginesy na dużych ekranach */
-            my-4 sm:my-6 md:my-8                  /* responsywne marginesy pionowe */
+            my-4 sm:my-3 md:my-4                  /* responsywne marginesy pionowe */
             p-4 rounded inline-block
             max-w-full sm:max-w-lg md:max-w-2xl lg:max-w-3xl xl:max-w-full  /* większa szerokość na dużych ekranach */
             break-words                            /* łamanie długich tekstów */
@@ -227,7 +227,13 @@ export default function Quiz({
       )}
 
       <div className="flex text-white py-2 px-4 items-center bg-black mt-auto">
-        <div className="text-2xl">
+        <div className="text-2xl"
+          style={{
+            textShadow: '5px 5px 3px rgba(0, 0, 0, 0.7)',
+            fontWeight: '700',
+            fontSize: '2.2em',
+          }}
+        >
           {question.order + 1}/{questionCount}
         </div>
       </div>

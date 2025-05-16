@@ -101,11 +101,11 @@ export default function Quiz({
       {isAnswerRevealed && (
         <div className="absolute top-4 right-4 z-20">
           <button
-            className="p-2 text-xl text-white bg-slate-900 rounded hover:bg-[#1C2D73] transition duration-300"
+            className="p-4 text-xl text-white bg-slate-900 rounded hover:bg-[#1C2D73] transition duration-300"
             style={{
               textShadow: '5px 5px 3px rgba(0, 0, 0, 0.7)',
               fontWeight: '700',
-              fontSize: '1.2em',
+              fontSize: '2.2em',
             }}
             onClick={getNextQuestion}
           >
@@ -158,7 +158,12 @@ export default function Quiz({
         <div className="text-white px-8 py-2 flex-shrink-0">
           {hasShownChoices && !isAnswerRevealed && (
           <div className="flex justify-between items-center">
-            <div className="text-5xl">
+            <div className="text-5xl bg-slate-900 rounded-full p-4 text-center"
+              style={{
+                  textShadow: '5px 5px 3px rgba(0, 0, 0, 0.7)',
+                  fontWeight: '700',
+                  fontSize: '3.2em',
+              }}>
               <CountdownCircleTimer
                 onComplete={() => {
                   onTimeUp()
@@ -171,9 +176,18 @@ export default function Quiz({
                 {({ remainingTime }) => remainingTime}
               </CountdownCircleTimer>
             </div>
-            <div className="text-center">
-              <div className="text-6xl pb-4">{answers.length}</div>
-              <div className="text-3xl">Answers</div>
+            <div className="bg-slate-900 rounded text-center p-4">
+              <div className="text-6xl pb-4"
+                style={{
+                  textShadow: '5px 5px 3px rgba(0, 0, 0, 0.7)',
+                  fontWeight: '700',
+                }}
+              >{answers.length}</div>
+              <div className="text-3xl" 
+                style={{
+                  textShadow: '5px 5px 3px rgba(0, 0, 0, 0.7)',
+                  fontWeight: '700',
+                }} >Answers</div>
             </div>
           </div>
         )}
@@ -294,8 +308,13 @@ export default function Quiz({
       </div>
 
       {/* Bottom progress bar - always at bottom */}
-      <div className="flex text-white py-4 px-4 items-center bg-black flex-shrink-0">
-        <div className="text-2xl">
+      <div className="flex text-white py-2 px-4 items-center bg-black flex-shrink-0">
+        <div className="text-2xl"
+          style={{
+              textShadow: '5px 5px 3px rgba(0, 0, 0, 0.7)',
+              fontWeight: '700',
+              fontSize: '2.2em',
+            }}>
           {question.order + 1}/{questionCount}
         </div>
       </div>

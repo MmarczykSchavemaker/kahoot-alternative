@@ -79,7 +79,7 @@ export default function Results({
                 <span className="text-xl font-bold">
                   {gameResult.total_score}
                 </span>
-                <span>pts</span>
+                <span>points</span>
               </div>
             </div>
           ))}

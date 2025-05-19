@@ -122,6 +122,11 @@ function Register({
 
     if (error) {
       setSending(false)
+      // Check if this is a unique constraint violation for nickname
+      if (error.message.includes("participants_nickname_key")) {
+        return alert("THIS NICKNAME IS ALREADY TAKEN. PLEASE TRY ANOTHER ONE.")
+      }
+      // For other errors, show the default message
       return alert(error.message)
     }
 

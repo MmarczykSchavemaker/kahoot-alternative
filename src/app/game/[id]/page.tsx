@@ -13,13 +13,39 @@ enum Screens {
 }
 
 export default function Home({
-  params: { id: gameId },
+  params: { id: gameCode }, // Rename to gameCode since we're using short codes in URLs
 }: {
   params: { id: string }
 }) {
+  // Store the actual game UUID separately
+  const [gameId, setGameId] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  // First fetch the actual UUID using the game code
+  useEffect(() => {
+    const fetchGameId = async () => {
+      const { data, error } = await supabase
+        .from('games')
+        .select('id')
+        .eq('game_code', gameCode)
+        .single()
+
+      if (error) {
+        console.error('Error fetching game:', error)
+        alert('Game not found')
+        return
+      }
+
+      setGameId(data.id)
+      setLoading(false)
+    }
+
+    fetchGameId()
+  }, [gameCode])
+
   const onRegisterCompleted = (participant: Participant) => {
     setParticipant(participant)
-    getGame()
+    if (gameId) getGame() // Only get game if gameId is available
   }
 
   const stateRef = useRef<Participant | null>()
@@ -36,10 +62,12 @@ export default function Home({
   const [isAnswerRevealed, setIsAnswerRevealed] = useState(false)
 
   const getGame = async () => {
+    if (!gameId) return // Safety check
+
     const { data: game } = await supabase
       .from('games')
       .select()
-      .eq('id', gameId)
+      .eq('id', gameId) // Use internal UUID
       .single()
     if (!game) return
     setCurrentScreen(game.phase as Screens)
@@ -64,8 +92,11 @@ export default function Home({
     setQuestions(data)
   }
 
+  // Only set up realtime listeners when we have the gameId
   useEffect(() => {
-    const setGameListner = (): RealtimeChannel => {
+    if (!gameId) return // Don't proceed without gameId
+
+    const setGameListener = (): RealtimeChannel => {
       return supabase
         .channel('game_participant')
         .on(
@@ -74,7 +105,7 @@ export default function Home({
             event: 'UPDATE',
             schema: 'public',
             table: 'games',
-            filter: `id=eq.${gameId}`,
+            filter: `id=eq.${gameId}`, // Use internal UUID
           },
           (payload) => {
             if (!stateRef.current) return
@@ -94,14 +125,24 @@ export default function Home({
         .subscribe()
     }
 
-    const gameChannel = setGameListner()
+    const gameChannel = setGameListener()
     return () => {
       supabase.removeChannel(gameChannel)
     }
-  }, [gameId])
+  }, [gameId]) // Changed dependency from gameCode to gameId
+
+  if (loading || !gameId) {
+    return (
+      <div className="bg-navy min-h-screen flex items-center justify-center">
+        <div className="p-8 bg-black text-white rounded-lg">
+          <h2 className="text-xl">Loading game...</h2>
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <main 
+    <main
       className="
        bg-navy
         w-full 

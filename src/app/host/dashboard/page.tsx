@@ -29,21 +29,23 @@ export default function Home() {
       await supabase.auth.signInAnonymously()
     }
 
+    // Create the game - this will generate both a UUID and a game_code
     const { data, error } = await supabase
       .from('games')
       .insert({
         quiz_set_id: quizSetId,
       })
-      .select()
+      .select('id, game_code') // Make sure to select the game_code field
       .single()
+
     if (error) {
       console.error(error)
       alert('Failed to start game')
       return
     }
 
-    const gameId = data.id
-    window.open(`/host/game/${gameId}`, '_blank', 'noopener,noreferrer')
+    // Use the short game_code in the URL instead of the UUID
+    window.open(`/host/game/${data.game_code}`, '_blank', 'noopener,noreferrer')
   }
 
   return (

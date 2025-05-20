@@ -12,11 +12,11 @@ import useWindowSize from 'react-use/lib/useWindowSize'
 
 export default function Results({
   quizSet,
-  gameId,
+  gameId, // This is the UUID, not the short game_code
 }: {
   participants: Participant[]
   quizSet: QuizSet
-  gameId: string
+  gameId: string // This is the UUID, not the short game_code
 }) {
   const [gameResults, setGameResults] = useState<GameResult[]>([])
 
@@ -24,10 +24,11 @@ export default function Results({
 
   useEffect(() => {
     const getResults = async () => {
+      // Query using the UUID (gameId)
       const { data, error } = await supabase
         .from('game_results')
         .select()
-        .eq('game_id', gameId)
+        .eq('game_id', gameId) // Using UUID for database relations
         .order('total_score', { ascending: false })
       if (error) {
         return alert(error.message)

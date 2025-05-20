@@ -22,19 +22,44 @@ enum AdminScreens {
 }
 
 export default function Home({
-  params: { id: gameId },
+  params: { id: gameCode }, // This is now the game_code from the URL
 }: {
   params: { id: string }
 }) {
   const [currentScreen, setCurrentScreen] = useState<AdminScreens>(
     AdminScreens.lobby
   )
-
+  const [gameId, setGameId] = useState<string | null>(null) // Store the actual UUID
   const [participants, setParticipants] = useState<Participant[]>([])
-
   const [quizSet, setQuizSet] = useState<QuizSet>()
+  const [loading, setLoading] = useState(true)
 
+  // First, fetch the actual gameId (UUID) using the game_code
   useEffect(() => {
+    const fetchGameId = async () => {
+      const { data: game, error } = await supabase
+        .from('games')
+        .select()
+        .eq('game_code', gameCode)
+        .single()
+
+      if (error) {
+        console.error('Error fetching game:', error)
+        alert('Game not found')
+        return
+      }
+
+      setGameId(game.id)
+      setLoading(false)
+    }
+
+    fetchGameId()
+  }, [gameCode])
+
+  // Only proceed with other data fetching once we have the actual gameId
+  useEffect(() => {
+    if (!gameId) return
+
     const getQuestions = async () => {
       const { data: gameData, error: gameError } = await supabase
         .from('games')
@@ -63,7 +88,7 @@ export default function Home({
       setQuizSet(data)
     }
 
-    const setGameListner = async () => {
+    const setGameListener = async () => {
       const { data } = await supabase
         .from('participants')
         .select()
@@ -121,28 +146,36 @@ export default function Home({
     }
 
     getQuestions()
-    setGameListner()
+    setGameListener()
   }, [gameId])
 
   const [currentQuestionSequence, setCurrentQuestionSequence] = useState(0)
 
+  if (loading) {
+    return (
+      <div className="bg-green-600 min-h-screen flex items-center justify-center">
+        <div className="text-white text-2xl">Loading game...</div>
+      </div>
+    )
+  }
+
   return (
     <main className="bg-green-600 min-h-screen">
-      {currentScreen == AdminScreens.lobby && (
+      {currentScreen == AdminScreens.lobby && gameId && (
         <Lobby participants={participants} gameId={gameId}></Lobby>
       )}
-      {currentScreen == AdminScreens.quiz && (
+      {currentScreen == AdminScreens.quiz && gameId && quizSet && (
         <Quiz
-          question={quizSet!.questions![currentQuestionSequence]}
-          questionCount={quizSet!.questions!.length}
+          question={quizSet.questions![currentQuestionSequence]}
+          questionCount={quizSet.questions!.length}
           gameId={gameId}
           participants={participants}
         ></Quiz>
       )}
-      {currentScreen == AdminScreens.result && (
+      {currentScreen == AdminScreens.result && gameId && quizSet && (
         <Results
-          participants={participants!}
-          quizSet={quizSet!}
+          participants={participants}
+          quizSet={quizSet}
           gameId={gameId}
         ></Results>
       )}

@@ -1,6 +1,7 @@
 import '../../../globals.css'
 import { Participant, supabase } from '@/types/types'
 import { useQRCode } from 'next-qrcode'
+import { useEffect, useState } from 'react'
 
 
 export default function Lobby({
@@ -11,12 +12,30 @@ export default function Lobby({
   gameId: string
 }) {
   const { Canvas } = useQRCode()
+  const [gameCode, setGameCode] = useState<string>("")
+  
+  // Fetch the game code on component mount
+  useEffect(() => {
+    const fetchGameCode = async () => {
+      const { data, error } = await supabase
+        .from('games')
+        .select('game_code')
+        .eq('id', gameId)
+        .single()
+      
+      if (data && !error) {
+        setGameCode(data.game_code)
+      }
+    }
+    
+    fetchGameCode()
+  }, [gameId])
 
   const onClickStartGame = async () => {
     const { data, error } = await supabase
       .from('games')
       .update({ phase: 'quiz' })
-      .eq('id', gameId)
+      .eq('id', gameId) // Still using UUID internally
     if (error) {
       return alert(error.message)
     }
@@ -31,17 +50,17 @@ export default function Lobby({
           >
             Start Game
           </button>
-          <br />
+          <br/>
         <h2 className="bg-white py-4 px-12 block text-black">
             Dołącz do gry pod tym linkiem lub zeskanuj kod QR:
             <br />
             <a
               className="text-blue-500"
-              href={`https://kahoot-alternative-mmarczykschavemakers-projects.vercel.app/game/${gameId}`}
+              href={`https://kahoot-alternative-rho.vercel.app/game/${gameCode || '...'}`}
               target="_blank"
               rel="noopener noreferrer"
             >
-              https://kahoot-alternative-mmarczykschavemakers-projects.vercel.app/game/{gameId}
+              https://kahoot-alternative-rho.vercel.app/game/{gameCode || '...'}
             </a>
           </h2>
       <div className="flex justify-between m-auto p-12">
@@ -59,16 +78,17 @@ export default function Lobby({
          
         </div>
         <div className="pl-4">
-          {/* <img src="/qr.png" alt="QR code" /> */}
-          <Canvas
-            text={`https://kahoot-alternative-mmarczykschavemakers-projects.vercel.app/game/${gameId}`}
-            options={{
-              errorCorrectionLevel: 'M',
-              margin: 3,
-              scale: 4,
-              width: 400,
-            }}
-          />
+          {gameCode && (
+            <Canvas
+              text={`https://kahoot-alternative-rho.vercel.app/game/${gameCode}`}
+              options={{
+                errorCorrectionLevel: 'M',
+                margin: 3,
+                scale: 4,
+                width: 400,
+              }}
+            />
+          )}
         </div>
       </div>
       </div>

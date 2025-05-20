@@ -51,7 +51,7 @@ export default function Lobby({
             Start Game
           </button>
           <br/>
-        <h2 className="bg-white py-4 px-12 block text-black">
+        <h2 className="text-center text-xl bg-white py-4 px-12 block text-black">
             Dołącz do gry pod tym linkiem lub zeskanuj kod QR:
             <br />
             <a
@@ -60,7 +60,7 @@ export default function Lobby({
               target="_blank"
               rel="noopener noreferrer"
             >
-              https://https://schave.vercel.app/game/{gameCode || '...'}
+              https://schave.vercel.app/game/{gameCode || '...'}
             </a>
           </h2>
       <div className="flex justify-between m-auto p-12">

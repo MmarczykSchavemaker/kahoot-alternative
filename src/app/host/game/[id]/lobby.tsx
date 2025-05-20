@@ -56,7 +56,7 @@ export default function Lobby({
             <br />
             <a
               className="text-blue-500"
-              href={`https://https://schave.vercel.app/game/${gameCode || '...'}`}
+              href={`https://schave.vercel.app/game/${gameCode || '...'}`}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -80,7 +80,7 @@ export default function Lobby({
         <div className="pl-4">
           {gameCode && (
             <Canvas
-              text={`https://kahoot-alternative-rho.vercel.app/game/${gameCode}`}
+              text={`https://schave.vercel.app/game/${gameCode}`}
               options={{
                 errorCorrectionLevel: 'M',
                 margin: 3,

@@ -24,7 +24,7 @@ export default function Lobby({
         .single()
       
       if (data && !error) {
-        setGameCode(data.game_code)
+        setGameCode(data.game_code ?? "") // Dodaj ?? "" aby obsłużyć null
       }
     }
     

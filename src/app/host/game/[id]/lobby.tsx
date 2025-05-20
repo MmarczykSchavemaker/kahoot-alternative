@@ -56,11 +56,11 @@ export default function Lobby({
             <br />
             <a
               className="text-blue-500"
-              href={`https://kahoot-alternative-rho.vercel.app/game/${gameCode || '...'}`}
+              href={`https://https://schave.vercel.app/game/${gameCode || '...'}`}
               target="_blank"
               rel="noopener noreferrer"
             >
-              https://kahoot-alternative-rho.vercel.app/game/{gameCode || '...'}
+              https://https://schave.vercel.app/game/{gameCode || '...'}
             </a>
           </h2>
       <div className="flex justify-between m-auto p-12">

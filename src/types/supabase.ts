@@ -1,10 +1,3 @@
-export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: Json | undefined }
-  | Json[]
 
 export type Database = {
   public: {
@@ -101,6 +94,7 @@ export type Database = {
         Row: {
           created_at: string
           current_question_sequence: number
+          game_code: string | null
           host_user_id: string | null
           id: string
           is_answer_revealed: boolean
@@ -110,6 +104,7 @@ export type Database = {
         Insert: {
           created_at?: string
           current_question_sequence?: number
+          game_code?: string | null
           host_user_id?: string | null
           id?: string
           is_answer_revealed?: boolean
@@ -119,6 +114,7 @@ export type Database = {
         Update: {
           created_at?: string
           current_question_sequence?: number
+          game_code?: string | null
           host_user_id?: string | null
           id?: string
           is_answer_revealed?: boolean
@@ -372,4 +368,3 @@ export const Constants = {
     Enums: {},
   },
 } as const
-
